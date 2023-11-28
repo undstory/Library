@@ -1,9 +1,9 @@
 import Image from 'next/image'
 
-export default function Home() {
+export default function BooksPage() {
   return (
     <main className=''>
-      HEllo
+      HEllo here we have a list of books
     </main>
   )
 }
