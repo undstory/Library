@@ -2,3 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .typical-wrapper {
+      @apply p-5 bg-slate-500 text-white font-semibold rounded-md shadow-md;
+    }
+    .typical-header {
+      @apply text-xl text-gray-800 tracking-wide font-bold uppercase;
+    }
+    .header-for-table {
+      @apply border-b border-zinc-400 uppercase px-6 py-2 text-center text-zinc-200
+    }
+    .row-for-table {
+      @apply px-6 py-5 text-center text-zinc-200
+    }
+  }

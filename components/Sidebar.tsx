@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "public/img/book-bookmark-white.png"
+import LogoutButton from "./LogoutButton";
 
 
 export default function Sidebar() {
@@ -33,7 +34,9 @@ export default function Sidebar() {
                 </ul>
             </nav>
             </div>
-            <footer className="flex py-5 mt-auto items-center justify-center bg-gray-900 text-gray-100">Logout Button</footer>
+            <footer className="flex py-5 mt-auto items-center justify-center bg-gray-900 text-gray-100">
+                <LogoutButton />
+            </footer>
         </aside>
     )
 }
