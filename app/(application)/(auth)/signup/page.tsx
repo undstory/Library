@@ -26,7 +26,13 @@ export default function SignUpPage() {
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
 
-         console.log("Hello")
+        const res = await fetch("/api/user", {
+            method: "POST",
+            body: JSON.stringify(userInfo),
+        }).then((res) => res.json());
+
+        if(res?.error) return setError(res.error);
+        router.replace("/signin");
     }
 
     return (

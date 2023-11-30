@@ -13,7 +13,7 @@ export default function SignInPage() {
         password: ""
     });
 
-    const [error, setError] = useState("")
+    const [error, setError] = useState<string | null | undefined>("")
 
     const { email, password } = userInfo;
 
@@ -24,8 +24,20 @@ export default function SignInPage() {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
-        console.log("hello 2")
-        router.replace("/summary");
+
+
+            const res = await signIn("credentials", {
+                email,
+                password,
+                redirect: false
+            });
+            if(res?.ok){
+                router.replace("/summary");
+            } else {
+                   setError(res?.error);
+            }
+
+
     }
 
     return (

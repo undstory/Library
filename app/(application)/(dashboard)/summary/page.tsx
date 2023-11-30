@@ -1,4 +1,13 @@
+import { prisma } from "@/lib/db";
 
+const getData = () => {
+  try {
+    const res = prisma.book.findMany();
+    return res;
+  } catch (error) {
+    throw new Error('Failed to fetch data')
+  }
+}
 
 const librarySections = [
   {
@@ -16,6 +25,9 @@ const librarySections = [
 ]
 
 export default async  function SummaryPage() {
+
+  const data = await getData();
+  // console.log(data)
 
     return (
       <main className="bg-gray-300 w-full h-full">
