@@ -1,6 +1,6 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## My Library App
+
+## My Library App - still in progress
 
 This is a place where you can organize your bookshelf, track your reading progress, check your own statistics and motivate yourself to read more books.
 
