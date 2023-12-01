@@ -4,9 +4,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db";
 
 const handler = NextAuth({
-//   session: {
-//     strategy: "database"
-// },
+  session: {
+    strategy: "jwt"
+  },
     adapter: PrismaAdapter(prisma),
     providers: [
         CredentialsProvider({
@@ -44,6 +44,15 @@ const handler = NextAuth({
               }
             }
           })
-    ]
+    ],
+    callbacks: {
+      async jwt({ token, user}){
+        return({ ...token, ...user})
+      },
+      async session({ session, token}){
+        session.user = token as any;
+        return session
+      }
+    }
 });
 export { handler as GET, handler as POST}

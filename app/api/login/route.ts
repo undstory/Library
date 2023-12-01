@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/db";
+import { signJwtAccessToken } from "@/lib/jwt";
 import * as bcrypt from"bcrypt";
 import { NextResponse } from "next/server";
 
@@ -38,7 +39,12 @@ export async function POST(req: Request){
             )
         }
         const { password, ...userWithoutPassword } = user;
-        return NextResponse.json(userWithoutPassword)
+        const accessToken = signJwtAccessToken(userWithoutPassword);
+        const result = {
+            ...userWithoutPassword,
+            accessToken
+        }
+        return NextResponse.json(result)
     } else {
         return NextResponse.json({
             error: "Coś poszło nie tak"
