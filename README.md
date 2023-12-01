@@ -1,6 +1,20 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## My Library App
+
+This is a place where you can organize your bookshelf, track your reading progress, check your own statistics and motivate yourself to read more books.
+
+### Tech stack
+
+I create this application to learn new technologies/tools. I use here:
+
+* Next.js
+* TypeScript
+* MongoDB
+* Prisma
+* TailwindCSS
+
+### Setup
 
 First, run the development server:
 
