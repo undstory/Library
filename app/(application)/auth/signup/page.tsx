@@ -32,7 +32,7 @@ export default function SignUpPage() {
         }).then((res) => res.json());
 
         if(res?.error) return setError(res.error);
-        router.replace("/signin");
+        router.replace("/auth/signin");
     }
 
     return (
@@ -97,7 +97,7 @@ export default function SignUpPage() {
                 </button>
             </form>
             <p>Masz już konto w serwisie Biblioteczka?</p>
-            <Link href="/signin" className="font-bold">Zaloguj się tutaj</Link>
+            <Link href="/auth/signin" className="font-bold">Zaloguj się tutaj</Link>
 
         </div>
     )

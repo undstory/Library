@@ -32,7 +32,7 @@ export default function SignInPage() {
                 redirect: false
             });
             if(res?.ok){
-                router.replace("/summary");
+                router.replace("/dashboard/summary");
             } else {
                    setError(res?.error);
             }
@@ -83,7 +83,7 @@ export default function SignInPage() {
             <button type="submit" className="self-end mt-2 mb-4 text-neutral-50 bg-gray-900 p-4">Zaloguj się</button>
         </form>
         <p>Nie masz jeszcze konta w serwisie Biblioteczka?</p>
-        <Link href="/sign-up" className="font-bold">Zarejestruj się tutaj</Link>
+        <Link href="/auth/signup" className="font-bold">Zarejestruj się tutaj</Link>
     </div>
     )
   }

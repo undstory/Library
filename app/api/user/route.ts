@@ -19,7 +19,7 @@ type NewResponse = NextResponse<{ user?: NewUserResponse; error?: string}>;
 export async function POST(req: Request): Promise<NewResponse>{
 const body = (await req.json()) as RequestBody;
 
-const oldUser = await prisma.user?.findFirst({
+const oldUser = await prisma.user?.findUnique({
     where: {
         email: body.email
     }
@@ -35,7 +35,7 @@ const user = await prisma.user.create({
     data: {
         name: body.name,
         email: body.email,
-        hashedPassword: await bcrypt.hash(body.password, 10)
+        password: await bcrypt.hash(body.password, 10)
     }
  });
 

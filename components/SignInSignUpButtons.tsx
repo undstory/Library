@@ -11,8 +11,8 @@ export default function SignInSignUpButtons() {
                 <Link href={"/dashboard/library"}>Moja biblioteczka</Link>
             ) : (
                 <div className="flex gap-4">
-                    <Link href={"/signup"}>Zarejestruj się </Link>
-                    <Link href={"/signin"}>Zaloguj się</Link>
+                    <Link href={"/auth/signup"}>Zarejestruj się </Link>
+                    <Link href={"/auth/signin"}>Zaloguj się</Link>
                 </div>
             )}
         </div>

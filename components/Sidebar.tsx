@@ -21,16 +21,16 @@ export default function Sidebar() {
             <nav className="pt-10 px-8 text-l">
                 <h3 className="typical-header mb-5">KSIĄŻKI</h3>
                 <ul className="flex flex-col gap-4">
-                    <li><Link href="/summary">Podsumowanie</Link></li>
-                    <li><Link href="/books">Moje książki</Link></li>
+                    <li><Link href="/dashboard/summary">Podsumowanie</Link></li>
+                    <li><Link href="/dashboard/books">Moje książki</Link></li>
                     <li><button onClick={() => console.log("Hello3")}>Dodaj nową pozycję</button></li>
                 </ul>
             </nav>
             <nav className="pt-10 px-8 text-l">
                 <h3 className="typical-header mb-5">UŻYTKOWNIK</h3>
                 <ul className="flex flex-col gap-4">
-                    <li><Link href="/profile">Mój profil</Link></li>
-                    <li><Link href="/statistics">Statystyki</Link></li>
+                    <li><Link href="/dashboard/profile">Mój profil</Link></li>
+                    <li><Link href="/dashboard/statistics">Statystyki</Link></li>
                 </ul>
             </nav>
             </div>

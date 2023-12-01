@@ -4,8 +4,9 @@ const prisma = new PrismaClient()
 
 const userData: Prisma.UserCreateInput[] = [
   {
-    name: 'Jesse',
-    email: 'jesse@mongodb.com',
+    name: 'Aganieszka',
+    email: 'cho@chochocho.pl',
+    password: "123",
     books: {
       create: [
         {
@@ -19,8 +20,9 @@ const userData: Prisma.UserCreateInput[] = [
     },
   },
   {
-    name: 'Mira',
-    email: 'mira@mongodb.com',
+    name: 'bella',
+    email: 'bella@ciao.pl',
+    password: "123",
     books: {
       create: [
         {
@@ -32,29 +34,7 @@ const userData: Prisma.UserCreateInput[] = [
           },
       ],
     },
-  },
-  {
-    name: 'Mike',
-    email: 'mike@mongodb.com',
-    books: {
-      create: [
-        {
-            title: 'Byr',
-            author: "XYZ",
-            status: STATUS.WAITING,
-            category: CATEGORY.CLASSIC,
-            owner: OWNER.OWN,
-          },
-          {
-            title: 'Yo',
-            author: "XYZ",
-            status: STATUS.WAITING,
-            category: CATEGORY.CLASSIC,
-            owner: OWNER.OWN,
-          },
-      ],
-    },
-  },
+  }
 ]
 
 async function main() {

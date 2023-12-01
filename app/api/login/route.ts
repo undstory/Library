@@ -16,7 +16,7 @@ interface LoginResponse {
 export async function POST(req: Request){
     const body = (await req.json()) as RequestBody;
 
-    const user = await prisma.user?.findFirst({
+    const user = await prisma.user?.findUnique({
         where: {
             email: body.email
         }
@@ -29,15 +29,15 @@ export async function POST(req: Request){
     }
 
 
-    if(user && user.hashedPassword) {
-        const passwordMatch = await bcrypt.compare(body.password, user.hashedPassword)
+    if(user && user.password) {
+        const passwordMatch = await bcrypt.compare(body.password, user.password)
         if(!passwordMatch){
             return NextResponse.json(
                 { error: "Coś tu się nie zgadza"},
                 { status: 422}
             )
         }
-        const { hashedPassword, ...userWithoutPassword } = user;
+        const { password, ...userWithoutPassword } = user;
         return NextResponse.json(userWithoutPassword)
     } else {
         return NextResponse.json({
