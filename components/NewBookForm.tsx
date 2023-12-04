@@ -75,10 +75,7 @@ export default function NewBookForm({setIsModal}: NewBookForm) {
                 },
                 body: JSON.stringify(formData)
             });
-            console.log(res)
             if(res.ok){
-                console.log("Data added")
-
                 setIsModal(false)
             } else {
                 setError("Coś poszło bardzo zle")

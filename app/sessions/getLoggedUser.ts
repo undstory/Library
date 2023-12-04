@@ -4,7 +4,8 @@ import { prisma } from "@/lib/db";
 
 
 export async function getSession() {
-    return await getServerSession(authOptions)
+    const getMySession =  await getServerSession(authOptions);
+    return getMySession;
 }
 
 export default async function getLoggedUser() {
@@ -29,6 +30,7 @@ export default async function getLoggedUser() {
             ...loggedUser
         }
     } catch (error: unknown) {
+        console.log(error)
         return null
     }
 }

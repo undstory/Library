@@ -1,6 +1,5 @@
 import getLoggedUser from "@/app/sessions/getLoggedUser";
 import { prisma } from "@/lib/db";
-import { now } from "next-auth/client/_utils";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -11,9 +10,8 @@ export async function POST(req: NextRequest) {
         })
     }
     const loggedUser = await getLoggedUser();
+
     const { dateOfStart, dateOfEnd} = body
-    console.log(loggedUser);
-    console.log(body)
 
     const newBook = await prisma.book.create({
         data: {
@@ -25,3 +23,4 @@ export async function POST(req: NextRequest) {
     })
     return NextResponse.json(newBook)
 }
+

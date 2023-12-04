@@ -1,13 +1,5 @@
-import { prisma } from "@/lib/db";
-
-// const getData = () => {
-//   try {
-//     const res = prisma.book.findMany();
-//     return res;
-//   } catch (error) {
-//     throw new Error('Failed to fetch data')
-//   }
-// }
+import TableOfBooks from "@/components/TableOfBooks";
+import { headers } from "next/headers"
 
 const librarySections = [
   {
@@ -24,10 +16,23 @@ const librarySections = [
   }
 ]
 
-export default async  function SummaryPage() {
+const getBooks = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/api/books", {
+    method: "GET",
+    headers: Object.fromEntries(headers())
+    });
+    return res.json();
 
-  // const data = await getData();
-  // console.log(data)
+  } catch (error) {
+    console.log("Failed to get books", error)
+  }
+}
+
+export default async function SummaryPage() {
+
+
+  const books  = await getBooks();
 
     return (
       <main className="bg-gray-300 w-full h-full">
@@ -50,6 +55,7 @@ export default async  function SummaryPage() {
             </div>
             <div className="typical-wrapper">
               <h2 className="typical-header">Ostatnio dodane pozycje</h2>
+              <TableOfBooks books={books} />
             </div>
          </div>
         </main>
