@@ -2,8 +2,9 @@ import NextAuth from "next-auth/next";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "@/lib/db";
+import { NextAuthOptions } from "next-auth";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt"
   },
@@ -31,7 +32,6 @@ const handler = NextAuth({
             })
 
             const user = await res.json();
-            console.log(user)
 
               if (user.error) {
                 // Any object returned will be saved in `user` property of the JWT
@@ -54,5 +54,7 @@ const handler = NextAuth({
         return session
       }
     }
-});
-export { handler as GET, handler as POST}
+}
+
+const authHandler = NextAuth(authOptions);
+export { authHandler as GET, authHandler as POST}

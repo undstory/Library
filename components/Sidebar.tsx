@@ -5,8 +5,11 @@ import Link from "next/link";
 import logo from "public/img/book-bookmark-white.png"
 import LogoutButton from "./LogoutButton";
 
+type SidebarProps = {
+    handleClick: any
+}
 
-export default function Sidebar() {
+export default function Sidebar({ handleClick }: SidebarProps ) {
 
 
     return (
@@ -23,7 +26,7 @@ export default function Sidebar() {
                 <ul className="flex flex-col gap-4">
                     <li><Link href="/dashboard/summary">Podsumowanie</Link></li>
                     <li><Link href="/dashboard/books">Moje książki</Link></li>
-                    <li><button onClick={() => console.log("Hello3")}>Dodaj nową pozycję</button></li>
+                    <li><button onClick={handleClick}>Dodaj nową pozycję</button></li>
                 </ul>
             </nav>
             <nav className="pt-10 px-8 text-l">

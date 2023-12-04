@@ -17,10 +17,10 @@ export async function GET(req: Request, { params }: { params: { id: number}}) {
     }
     const dashboard = await prisma.book.findMany({
         where: {
-            createdById: params.id.toString()
+            userId: params.id.toString()
         },
         include: {
-            createdBy: {
+            user: {
                 select: {
                     email: true,
                     name: true
