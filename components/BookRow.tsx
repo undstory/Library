@@ -2,6 +2,7 @@ import Image from 'next/image'
 import edit from "@/public/img/edit.png"
 import deleteIt from "@/public/img/delete.png"
 import { useState } from 'react'
+import { Modal } from './Modal'
 
 type BookType = {
     book: any
@@ -9,6 +10,8 @@ type BookType = {
 
 export function BookRow({ book}: BookType) {
 
+  const [modalOpen, setModalOpen] = useState(false)
+  const [openModalDelete, setOpenModalDelete] = useState(false)
 
 
     const handleDelete = async (id: any) => {
@@ -84,7 +87,8 @@ export function BookRow({ book}: BookType) {
           className="row-for-table"
         >
           <button
-            onClick={() => handleDelete(id)}
+            // onClick={() => handleDelete(id)}
+            onClick={() => setOpenModalDelete(true)}
           >
             <Image
               className="mx-auto"
@@ -94,5 +98,29 @@ export function BookRow({ book}: BookType) {
             />
           </button>
         </td>
+        <Modal modalOpen={openModalDelete} setModalOpen={setOpenModalDelete}>
+          <div
+            className='px-12 pt-12 flex justify-center flex-col items-center'
+          >
+          <h1
+          >
+            Czy jesteś pewny, że chcesz usunąć tą pozycję?
+          </h1>
+          <div
+            className='p-10 flex gap-8'
+          >
+            <button
+              className='bg-gray-300 px-4 py-2 w-24 text-gray-700'
+              onClick={() => setOpenModalDelete(false)}
+            >Nie</button>
+            <button
+              className='bg-red-500 px-4 py-2 w-24'
+              onClick={() => handleDelete(id)}
+            >
+              Tak
+            </button>
+          </div>
+          </div>
+        </Modal>
       </tr>
     )}
