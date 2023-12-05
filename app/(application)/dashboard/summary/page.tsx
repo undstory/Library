@@ -1,5 +1,6 @@
+import { getAllBooks } from "@/app/utils/apicalls";
 import TableOfBooks from "@/components/TableOfBooks";
-import { headers } from "next/headers"
+
 
 const librarySections = [
   {
@@ -16,27 +17,13 @@ const librarySections = [
   }
 ]
 
-const getBooks = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/books", {
-    method: "GET",
-    headers: Object.fromEntries(headers())
-    });
-    return res.json();
-
-  } catch (error) {
-    console.log("Failed to get books", error)
-  }
-}
-
 export default async function SummaryPage() {
 
-
-  const books  = await getBooks();
+  const books  = await getAllBooks();
 
     return (
       <main className="bg-gray-300 w-full h-full">
-        <main>
+        <div>
           <div className="p-10 flex gap-10 flex-col  w-full">
             <div className="flex w-full gap-5">
               <div className="typical-wrapper w-full ">
@@ -58,7 +45,7 @@ export default async function SummaryPage() {
               <TableOfBooks books={books} />
             </div>
          </div>
-        </main>
+        </div>
       </main>
     )
   }
