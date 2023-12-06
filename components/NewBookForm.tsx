@@ -4,10 +4,10 @@ import { useSession } from "next-auth/react";
 import { FormEventHandler, useEffect, useState } from "react";
 
 enum Status {
-    DONE = "Done",
-    READING = "Reading",
-    WAITING = "Waiting",
-    ON_HOLD = "On_hold"
+    DONE = "Skończona",
+    READING = "W trakcie",
+    WAITING = "Czeka",
+    ON_HOLD = "Wstrzymane"
  }
 
 enum Category {
@@ -224,7 +224,7 @@ export default function NewBookForm({setIsModal}: NewBookForm) {
                                 name="dateOfEnd"
                                 type="date"
                                 onChange={handleChange}
-                                disabled={formData.status === "Done" ? false : true}
+                                disabled={formData.status !== "Done" ? false : true}
                                 required={formData.status === "Done" ? true : false}
                                 value={formData.dateOfEnd}
                             />
