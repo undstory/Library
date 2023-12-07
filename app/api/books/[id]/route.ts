@@ -26,20 +26,20 @@ export async function PUT(req: Request, {params} : {params: {id: string}}) {
     try {
         const { id } = params;
         const body = await req.json();
+        const { id: bodyId, ...bodyWithoutId} = body
         const updateBook = await prisma.book.update({
             where: {
                 id
             },
             data: {
-                ...body
+                ...bodyWithoutId
             }
         })
-
         return NextResponse.json({message: "Updated!", updateBook}, { status: 200})
 
     } catch (error) {
         return NextResponse.json({
-            message: "DELETE error", error
+            message: "EDIT error", error
         },
         {
             status: 500

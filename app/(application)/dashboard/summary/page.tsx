@@ -42,7 +42,16 @@ export default async function SummaryPage() {
             </div>
             <div className="typical-wrapper">
               <h2 className="typical-header">Ostatnio dodane pozycje</h2>
-              <TableOfBooks books={books} />
+              {books?.length ? (
+                <TableOfBooks books={books} />
+              ) : (
+                <p
+                  className="py-8 pl-4"
+                >
+                  Nie dodałeś/aś jeszcze żadnej książki
+                </p>
+              )
+            }
             </div>
          </div>
         </div>
