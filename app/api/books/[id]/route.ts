@@ -26,12 +26,14 @@ export async function PUT(req: Request, {params} : {params: {id: string}}) {
     try {
         const { id } = params;
         const body = await req.json();
-        const { id: bodyId, ...bodyWithoutId} = body
+        const { id: bodyId, dateOfStart, dateOfEnd, ...bodyWithoutId} = body
         const updateBook = await prisma.book.update({
             where: {
                 id
             },
             data: {
+                dateOfEnd: dateOfEnd !== '' ? new Date(dateOfEnd).toISOString() : undefined,
+                dateOfStart: dateOfStart !== '' ? new Date(dateOfStart).toISOString() : undefined,
                 ...bodyWithoutId
             }
         })

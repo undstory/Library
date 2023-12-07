@@ -41,10 +41,21 @@ export function BookRow({ book}: BookType) {
   const { title, author, category, status, owner, dateOfStart, dateOfEnd, id } = book;
 
   const startDateString =  fromIso(dateOfStart)
+  const endDateString =  fromIso(dateOfEnd)
+
+  const refactorBook = {
+    title,
+    author,
+    category,
+    status,
+    owner,
+    dateOfStart: startDateString,
+    dateOfEnd: endDateString
+  }
 
   const [ modalDelete, setModalDelete] = useState(false);
   const [ modalEdit, setModalEdit ] = useState(false);
-  const [ bookToEdit, setBookToEdit] = useState(book);
+  const [ bookToEdit, setBookToEdit] = useState(refactorBook);
   const [error, setError] = useState("");
 
     const handleDelete = async (id: any) => {
@@ -135,12 +146,12 @@ const handleEditSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         <td
           className="row-for-table"
         >
-          {dateOfStart ? dateOfStart : "Brak"}
+          {refactorBook.dateOfStart ? refactorBook.dateOfStart : "Brak"}
         </td>
         <td
           className="row-for-table"
         >
-          {dateOfEnd ? dateOfEnd : "Brak"}
+          {refactorBook.dateOfEnd ? refactorBook.dateOfEnd : "Brak"}
         </td>
         <td
           className="row-for-table"
@@ -170,7 +181,7 @@ const handleEditSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
             />
           </button>
       <Modal setModalOpen={setModalEdit} modalOpen={modalEdit} headerText={headerText.edit}>
-        <>
+        <div className='p-10'>
         { error ? (
                 <div className="mb-8">
                     <div
@@ -310,31 +321,47 @@ const handleEditSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
                         </label>
                     </div>
                 </div>
-                <button
-                    type="submit"
-                    className="bg-slate-500 py-5 w-1/4 mx-auto my-5"
-                    // disabled={isValid ? false : true }
-                >
-                    Dodaj
-                </button>
+                <div className='flex justify-center items-center gap-4'>
+                  <button
+                      type="button"
+                      className="bg-gray-300 text-black px-8 py-2"
+                      onClick={() => setModalEdit(false)}
+                  >
+                      Anuluj
+                  </button>
+                  <button
+                      type="submit"
+                      className="bg-slate-500 px-8 py-2"
+
+                  >
+                      Zmień
+                  </button>
+                </div>
+
             </form>
-            </>
+            </div>
       </Modal>
       <Modal setModalOpen={setModalDelete} modalOpen={modalDelete} headerText={headerText.delete}>
-        <div>
-          <p>Czy na pewno chcesz usunąć tą książkę?</p>
-        </div>
-        <div>
-          <button
-            onClick={() => setModalDelete(false)}
-          >
-            Nie
-          </button>
-          <button
-            onClick={() => handleDelete(book.id)}
-          >
-            Tak
-          </button>
+        <div
+          className='py-10'
+        >
+          <div className='pb-4'>
+            <p>Czy na pewno chcesz usunąć tą książkę?</p>
+          </div>
+          <div className='flex gap-4 justify-center items-center'>
+            <button
+              className='bg-gray-300 text-black px-8 py-2'
+              onClick={() => setModalDelete(false)}
+            >
+              Nie
+            </button>
+            <button
+            className='bg-red-500 text-white px-8 py-2'
+              onClick={() => handleDelete(book.id)}
+            >
+              Tak
+            </button>
+          </div>
         </div>
       </Modal>
         </td>
