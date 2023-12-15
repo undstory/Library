@@ -11,6 +11,7 @@ export async function GET() {
             userId: loggedUserId
         }
     })
+    console.log(books)
     if(!books) {
         return NextResponse.json({
             error: "Nie znaleziono szukanych danych"

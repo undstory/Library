@@ -6,7 +6,7 @@ type ModalProps = {
 }
 
 
-export function Modal({ children, setModalOpen, modalOpen, headerText}: ModalProps) {
+export default function Modal({ children, setModalOpen, modalOpen, headerText}: ModalProps) {
     return (
         <>
         { modalOpen && (

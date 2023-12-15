@@ -1,14 +1,41 @@
-"use client"
+"use client";
+import { QueryClient, useIsFetching, useQuery } from "@tanstack/react-query"
+import BookRow  from './BookRow'
+import { getAllBooks } from "@/app/utils/apicalls";
 
-import { useState } from 'react'
-import { BookRow } from './BookRow'
 
-type TableWithAllBooksType = {
-    books: any,
 
-}
+// type TableWithAllBooksType = {
+//     books: any,
 
-export function TableWithAllBooks ({ books  }: TableWithAllBooksType) {
+// }
+
+export default function TableWithAllBooks () {
+    const queryClient = new QueryClient()
+    const isFetching = useIsFetching();
+    const {data: booksData, isLoading, isError, isSuccess} = useQuery({
+        queryKey: ["allBooks"],
+        queryFn: () => fetch("http://localhost:3000/api/books").then((res) => res.json())
+    })
+    if(isLoading){
+        return (
+            <div
+                className="mt-4 flex p-10 flex-col items-center bg-red-500 text-white"
+            >
+                Zaczekaj chwilę, muszę załadować książki
+            </div>
+        )
+    }
+
+    if(isError){
+        return (
+            <div
+                className="mt-4 flex p-10 flex-col items-center bg-red-500 text-white"
+            >
+                Wsytąpił błąd z ładowaniem książek, spróbuj ponownie później
+            </div>
+        )
+    }
 
 
     return (
@@ -29,7 +56,7 @@ export function TableWithAllBooks ({ books  }: TableWithAllBooksType) {
             </tr>
         </thead>
         <tbody>
-            { books.map((book: any) => {
+            {booksData?.map((book: any) => {
                 const { id } = book;
                 return (
                   <BookRow book={book} key={id} />

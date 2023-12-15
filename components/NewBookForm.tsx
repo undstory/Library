@@ -1,5 +1,6 @@
 "use client";
 
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import { FormEventHandler, useEffect, useState } from "react";
 
@@ -66,27 +67,44 @@ export default function NewBookForm({setIsModal}: NewBookForm) {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
         e.preventDefault();
+        mutation.mutate(formData)
 
-        try {
-            const res = await fetch('http://localhost:3000/api/book', {
+        // try {
+        //     const res = await fetch('http://localhost:3000/api/book', {
+        //         method: "POST",
+        //         headers: {
+        //             "Content-Type": "application/json"
+        //         },
+        //         body: JSON.stringify(formData)
+        //     });
+        //     if(res.ok){
+        //         setIsModal(false)
+        //     } else {
+        //         setError("Coś poszło bardzo zle")
+        //     }
+        // } catch(error) {
+        //     console.log(error)
+        //     setError("Coś poszło bardzo nie tak")
+        // }
+    }
+
+    const client = useQueryClient();
+    const mutation: any = useMutation({
+        mutationFn: () => {
+            const res = fetch('http://localhost:3000/api/book', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(formData)
-            });
-            if(res.ok){
-                setIsModal(false)
-            } else {
-                setError("Coś poszło bardzo zle")
-            }
-        } catch(error) {
-            console.log(error)
-            setError("Coś poszło bardzo nie tak")
+            })
+            return res;
+        },
+        onSuccess: () => {
+            client.invalidateQueries({queryKey: ['allBooks']}),
+            client.invalidateQueries({queryKey: ['allBooksSummary']})
         }
-    }
-
-
+    })
 
     return (
          <div

@@ -1,24 +1,14 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 "use client"
 
-import { useEffect, useState } from "react"
 
-
-
-type TableOfBooksProps = {
-    books: any,
-
+type TableOfBooksType = {
+    books: any
 }
 
-export default function TableOfBooks ({ books }: TableOfBooksProps) {
 
-    const [ stateOfBooks, setStateOfBooks ] = useState(books)
-    const [limitedBooks, setLimitedBooks] = useState(stateOfBooks)
+export default function TableOfBooks ({ books }: TableOfBooksType) {
 
-
-    useEffect(() => {
-        const lastAddedBooks = stateOfBooks?.slice(-5)
-        setLimitedBooks(lastAddedBooks)
-    }, [stateOfBooks, books])
 
     return (
         <section className="py-5">
@@ -34,7 +24,7 @@ export default function TableOfBooks ({ books }: TableOfBooksProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    { limitedBooks.map((book: any) => {
+                    { books?.map((book: any) => {
                         return (
                             <tr key={book.id}>
                                 <td className="row-for-table">{book.title}</td>

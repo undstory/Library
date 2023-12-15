@@ -3,8 +3,8 @@ import Image from 'next/image'
 import edit from "@/public/img/edit.png"
 import deleteIt from "@/public/img/delete.png"
 import { FormEventHandler, useState } from 'react'
-import moment from 'moment'
-import { Modal } from './Modal'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import Modal from './Modal'
 import { fromIso } from '@/app/utils/dates'
 
 type BookType = {
@@ -36,7 +36,7 @@ enum Owner {
   LIBRARY = "Z biblioteki",
 }
 
-export function BookRow({ book}: BookType) {
+export default function BookRow({ book}: BookType) {
 
   const { title, author, category, status, owner, dateOfStart, dateOfEnd, id } = book;
 
@@ -60,21 +60,21 @@ export function BookRow({ book}: BookType) {
 
     const handleDelete = async (id: any) => {
 
-        try {
-            const res = await fetch(`http://localhost:3000/api/books/${id}`, {
-            method: "DELETE",
-            })
+        // try {
+        //     const res = await fetch(`http://localhost:3000/api/books/${id}`, {
+        //     method: "DELETE",
+        //     })
 
-            if(!res.ok){
-                throw new Error(`Error status: ${res.status}`)
-            }
+        //     if(!res.ok){
+        //         throw new Error(`Error status: ${res.status}`)
+        //     }
 
-            const result = await res.json();
-            setModalDelete(false)
-            return result;
-        } catch (error) {
-            console.log("Hej errrrrooorrr", error)
-        }
+        //     const result = await res.json();
+        //     setModalDelete(false)
+        //     return result;
+        // } catch (error) {
+        //     console.log("Hej errrrrooorrr", error)
+        // }
     }
 
     const handleChange = (e: any) => {
@@ -89,31 +89,61 @@ export function BookRow({ book}: BookType) {
 
 const handleEditSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
   e.preventDefault();
-
-  try {
-      const res = await fetch(`http://localhost:3000/api/books/${book.id}`, {
-          method: "PUT",
-          headers: {
-              "Content-Type": "application/json"
-          },
-          body: JSON.stringify(bookToEdit)
-      });
-      // console.log(bookToEdit)
-      // console.log(res)
-      const data = await res.json();
-
-
-      console.log(data)
-
-        setModalEdit(false)
-        return data;
+  mutation2.mutate(bookToEdit)
+  // try {
+  //     const res = await fetch(`http://localhost:3000/api/books/${book.id}`, {
+  //         method: "PUT",
+  //         headers: {
+  //             "Content-Type": "application/json"
+  //         },
+  //         body: JSON.stringify(bookToEdit)
+  //     });
+  //     // console.log(bookToEdit)
+  //     // console.log(res)
+  //     const data = await res.json();
 
 
-  } catch(error) {
-      console.log(error)
-      setError("Coś poszło bardzo nie tak")
-  }
+  //     console.log(data)
+
+  //       setModalEdit(false)
+  //       return data;
+
+
+  // } catch(error) {
+  //     console.log(error)
+  //     setError("Coś poszło bardzo nie tak")
+  // }
 }
+
+const client = useQueryClient();
+const mutation: any = useMutation({
+    mutationFn: () => {
+      const res = fetch(`http://localhost:3000/api/books/${id}`, {
+        method: "DELETE",
+        })
+        return res;
+    },
+    onSuccess: () => {
+        client.invalidateQueries({queryKey: ['allBooks']}),
+        client.invalidateQueries({queryKey: ['allBooksSummary']})
+    }
+})
+const mutation2: any = useMutation({
+  mutationFn: () => {
+    const res = fetch(`http://localhost:3000/api/books/${book.id}`, {
+              method: "PUT",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(bookToEdit)
+          });
+      return res;
+  },
+  onSuccess: () => {
+      client.invalidateQueries({queryKey: ['allBooks']}),
+      client.invalidateQueries({queryKey: ['allBooksSummary']})
+  }
+})
 
 
     return (
@@ -357,7 +387,7 @@ const handleEditSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
             </button>
             <button
             className='bg-red-500 text-white px-8 py-2'
-              onClick={() => handleDelete(book.id)}
+              onClick={() => mutation.mutate(id)}
             >
               Tak
             </button>
